@@ -264,14 +264,17 @@ export default function Gameplay() {
   const [currentPage, setCurrentPage] = useState(1);
   const [editingTurnId, setEditingTurnId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
-  const totalPages = Math.max(1, turns.length);
+  const totalPages = Math.max(1, turns.length - 1);
 
   useEffect(() => {
-    setCurrentPage(Math.max(1, turns.length));
+    setCurrentPage(Math.max(1, turns.length - 1));
   }, [turns.length]);
 
   const getPageTurns = (page: number) => {
-    const idx = page - 1;
+    if (page === 1) {
+      return turns.slice(0, 2);
+    }
+    const idx = page;
     if (idx >= 0 && idx < turns.length) {
       return [turns[idx]];
     }
